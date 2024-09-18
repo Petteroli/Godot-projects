@@ -1,0 +1,124 @@
+[gd_scene load_steps=23 format=3 uid="uid://7nin2i8bdr6l"]
+
+[ext_resource type="Script" path="res://Player/player.gd" id="1_cqmq4"]
+[ext_resource type="Texture2D" uid="uid://cqbxefbvh45qh" path="res://Assets/Packs/Sunnyland/sprites/player/hurt/player-hurt-1.png" id="2_ov8yj"]
+[ext_resource type="Texture2D" uid="uid://dc2lnu3vad768" path="res://Assets/Packs/Sunnyland/sprites/player/hurt/player-hurt-2.png" id="3_i2r6q"]
+[ext_resource type="Texture2D" uid="uid://i7o2vbd2feop" path="res://Assets/Packs/Sunnyland/sprites/player/idle/player-idle-1.png" id="4_40uhf"]
+[ext_resource type="Texture2D" uid="uid://bq8ewyvpal334" path="res://Assets/Packs/Sunnyland/sprites/player/idle/player-idle-2.png" id="5_w43j2"]
+[ext_resource type="Texture2D" uid="uid://2tnvs6apw2gy" path="res://Assets/Packs/Sunnyland/sprites/player/idle/player-idle-3.png" id="6_wr7xn"]
+[ext_resource type="Texture2D" uid="uid://b64ymjyhuaoo6" path="res://Assets/Packs/Sunnyland/sprites/player/idle/player-idle-4.png" id="7_eeoaj"]
+[ext_resource type="Texture2D" uid="uid://wfvuvvwyju0t" path="res://Assets/Packs/Sunnyland/sprites/player/jump/player-jump-1.png" id="8_vuvh7"]
+[ext_resource type="Texture2D" uid="uid://coay11lrpsfxf" path="res://Assets/Packs/Sunnyland/sprites/player/jump/player-jump-2.png" id="9_1si0b"]
+[ext_resource type="Texture2D" uid="uid://da65rjn45ag82" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-1.png" id="10_f8ndm"]
+[ext_resource type="Texture2D" uid="uid://bo2pqa1mxchlh" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-2.png" id="11_ut0j0"]
+[ext_resource type="Texture2D" uid="uid://b2icjd4g1g2xe" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-3.png" id="12_1d266"]
+[ext_resource type="Texture2D" uid="uid://dmg2g1atyh73b" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-4.png" id="13_mrub7"]
+[ext_resource type="Texture2D" uid="uid://dph6jfc5c3t3r" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-5.png" id="14_w1qjg"]
+[ext_resource type="Texture2D" uid="uid://c4hmskkqwgdeg" path="res://Assets/Packs/Sunnyland/sprites/player/run/player-run-6.png" id="15_hf3jh"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2n1g2"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_mf4x1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ov8yj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i2r6q")
+}],
+"loop": true,
+"name": &"Death",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_40uhf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_w43j2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_wr7xn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_eeoaj")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_vuvh7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_1si0b")
+}],
+"loop": true,
+"name": &"Jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_f8ndm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_ut0j0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_1d266")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_mrub7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_w1qjg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_hf3jh")
+}],
+"loop": true,
+"name": &"Run",
+"speed": 5.0
+}]
+
+[sub_resource type="Animation" id="Animation_abo1w"]
+resource_name = "Idle"
+
+[sub_resource type="Animation" id="Animation_rygtk"]
+resource_name = "Run"
+
+[sub_resource type="Animation" id="Animation_hjmby"]
+resource_name = "Jump"
+
+[sub_resource type="Animation" id="Animation_0cjpk"]
+resource_name = "Death"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_yp62n"]
+_data = {
+"Death": SubResource("Animation_0cjpk"),
+"Idle": SubResource("Animation_abo1w"),
+"Jump": SubResource("Animation_hjmby"),
+"Run": SubResource("Animation_rygtk")
+}
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_cqmq4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_2n1g2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_mf4x1")
+animation = &"Death"
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.6, 1.6)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_yp62n")
+}
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
